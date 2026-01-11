@@ -11,10 +11,9 @@ DB_NAME = os.getenv("DB_NAME", "milestone_db")
 
 app = FastAPI()
 
-# CORS zodat browser vanaf frontend (andere port) mag callen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # voor opdracht: mag simpel
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,7 +32,7 @@ def get_connection():
 def init_db():
     conn = get_connection()
     cur = conn.cursor()
-    # Tabel met één naam
+
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS names (
@@ -42,11 +41,11 @@ def init_db():
         )
         """
     )
-    # Kijk of er al een rij is
+
     cur.execute("SELECT COUNT(*) FROM names")
     (count,) = cur.fetchone()
     if count == 0:
-        # Zet hier je eigen naam
+
         cur.execute(
             "INSERT INTO names (id, name) VALUES (%s, %s)",
             (1, "Anmoldeep Singh"),
